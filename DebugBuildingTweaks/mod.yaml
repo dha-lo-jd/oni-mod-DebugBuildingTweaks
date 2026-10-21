@@ -1,0 +1,6 @@
+title: "Debug Building Tweaks"
+description: "Tweaks for debug buildings."
+requiredDlcIds: []
+forbiddenDlcIds: []
+minimumSupportedBuild: 744825
+version: "1.0.0"
