@@ -1,62 +1,61 @@
 # Debug Building Tweaks
 
-Oxygen Not Included のデバッグ建築を、実運用しやすく調整する Mod です。  
-現在は **Dev Pump（液体/気体）** を対象に、出力量と温度の調整機能を追加しています。
+This mod improves the usability of debug buildings in Oxygen Not Included.  
+Right now it focuses on **Dev Pumps (Liquid/Gas)** and adds output-rate and temperature controls.
 
-## Steam 公開用説明文（コピペ用）
+## Steam Description (Copy/Paste)
 
-デバッグ用ポンプ（Dev Pump）を使いやすくする小規模 Tweaks です。  
-液体/気体それぞれで出力量を調整でき、吐出温度もサイドスクリーンから直接変更できます。
+A small tweak mod that makes debug pumps (Dev Pumps) easier to use.  
+You can directly configure output rate and output temperature from the side screen.
 
-- 液体 Dev Pump の出力量上限: **10000 g/s**
-- 気体 Dev Pump の出力量上限: **1000 g/s**
-- 温度設定に対応（ゲーム内温度単位表示に追従）
-- 要素フィルター検索を強化（表示名＋内部IDで検索）
+- Liquid Dev Pump output cap: **10000 g/s**
+- Gas Dev Pump output cap: **1000 g/s**
+- Temperature setting support (follows in-game temperature units)
+- Improved element filter search (matches both display names and internal IDs)
 
-デバッグ検証やテスト用の利用を想定しています。  
-通常プレイのバランス調整を目的とした Mod ではありません。
+Designed mainly for debugging and test scenarios.  
+This is not intended as a normal gameplay balance mod.
 
-## 機能
+## Features
 
-### 1. Dev Pump の出力量調整
+### 1. Dev Pump Output Control
 
-- サイドスクリーンから出力量をスライダー/数値入力で変更可能
-- 上限値:
-  - 液体: **10000 g/s**
-  - 気体: **1000 g/s**
+- Adjust output rate from the side screen using a slider or numeric input
+- Output caps:
+  - Liquid: **10000 g/s**
+  - Gas: **1000 g/s**
 
-### 2. Dev Pump の吐出温度調整
+### 2. Dev Pump Temperature Control
 
-- サイドスクリーンから温度を変更可能
-- 温度表示はゲーム設定の単位（℃/K など）に追従
+- Adjust output temperature from the side screen
+- Temperature display follows the game unit setting (e.g. °C / K)
 
-### 3. フィルター検索拡張
+### 3. Enhanced Filter Search
 
-- Dev Pump の要素フィルター検索で、表示名に加えて内部 ID（例: `OxygenGas`）でもヒット
+- Dev Pump element filtering now matches internal IDs (e.g. `OxygenGas`) in addition to display names
 
-## 対応環境
+## Compatibility
 
-- ONI build: **744825 以上**
-- DLC 必須: なし
+- ONI build: **744825 or later**
+- Required DLC: none
 - Mod version: **1.0.0**
 
-## 使い方
+## Usage
 
-1. デバッグ建築から Dev Pump（液体/気体）を配置
-2. 建物を選択してサイドスクリーンを開く
-3. `Output` と `Temperature` を調整
+1. Place a Dev Pump (Liquid or Gas) from debug buildings
+2. Select the building and open its side screen
+3. Adjust `Output` and `Temperature`
 
-## 注意事項
+## Notes
 
-- デバッグ用途を主目的としています
-- UI/サイドスクリーン系を変更する他 Mod と競合する可能性があります
+- Primarily intended for debugging workflows
+- May conflict with other mods that modify UI/side-screen behavior
 
-## 技術メモ
+## Technical Notes
 
-- Harmony + PLib を使用
-- 主なパッチ対象:
+- Built with Harmony + PLib
+- Main patch targets:
   - `DevPumpGasConfig.DoPostConfigureComplete`
   - `DevPumpLiquidConfig.DoPostConfigureComplete`
   - `DevPump.Sim1000ms`
   - `DetailsScreen.OnPrefabInit`
-
