@@ -69,7 +69,7 @@ public sealed class DevPumpSideScreen : SideScreenContent
         AddSetting(root, "Temp", Text.Temperature, GameUtil.GetTemperatureUnitSuffix().Trim(),
             tempMin, tempMax,
             () => GameUtil.GetConvertedTemperature(target.Temperature),
-            v => target.Temperature = GameUtil.GetTemperatureConvertedToKelvin(v));
+            v => target.SetTemperature(GameUtil.GetTemperatureConvertedToKelvin(v)));
 
         root.AddOnRealize(go => content = go);
         root.AddTo(ContentContainer != null ? ContentContainer : gameObject);

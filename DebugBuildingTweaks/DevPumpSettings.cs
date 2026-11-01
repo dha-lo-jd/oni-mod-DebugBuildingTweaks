@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace DebugBuildingTweaks;
 
+/// <summary>
+/// Per-pump settings (output rate and temperature) added to the vanilla dev pumps,
+/// plus the replacement fill logic that honours them.
+/// </summary>
 public sealed class DevPumpSettings : KMonoBehaviour
 {
     public const float LiquidMaxGramsPerSecond = 10000f;
@@ -11,14 +15,17 @@ public sealed class DevPumpSettings : KMonoBehaviour
     public const float MaxTemperature = 5000f;
     public const float FallbackTemperature = 293.15f;
 
+    private const float MinCapacityKg = 20f;
+
     [MyCmpReq] private Storage storage;
     [MyCmpReq] private DevPump pump;
-
-    public float MaxGramsPerSecond = LiquidMaxGramsPerSecond;
 
     [Serialize] private float gramsPerSecond = LiquidMaxGramsPerSecond;
     [Serialize] private bool useCustomTemperature;
     [Serialize] private float customTemperature = FallbackTemperature;
+
+    public float MaxGramsPerSecond =>
+        pump.elementState == Filterable.ElementState.Gas ? GasMaxGramsPerSecond : LiquidMaxGramsPerSecond;
 
     public float GramsPerSecond
     {
@@ -32,17 +39,8 @@ public sealed class DevPumpSettings : KMonoBehaviour
 
     public float Kilograms => gramsPerSecond / 1000f;
 
-    public float Temperature
-    {
-        get => useCustomTemperature ? customTemperature : DefaultTemperature;
-        set
-        {
-            customTemperature = Mathf.Clamp(value, MinTemperature, MaxTemperature);
-            useCustomTemperature = true;
-            // Stored mass keeps its old temperature, so discard it to apply the new one immediately.
-            storage.ConsumeAllIgnoringDisease();
-        }
-    }
+    /// <summary>Kelvin. Falls back to the selected element's default temperature until one is set.</summary>
+    public float Temperature => useCustomTemperature ? customTemperature : DefaultTemperature;
 
     public float DefaultTemperature
     {
@@ -61,11 +59,43 @@ public sealed class DevPumpSettings : KMonoBehaviour
         UpdateCapacity();
     }
 
+    public void SetTemperature(float kelvin)
+    {
+        customTemperature = Mathf.Clamp(kelvin, MinTemperature, MaxTemperature);
+        useCustomTemperature = true;
+        // Stored mass keeps its old temperature, so discard it to apply the new one immediately.
+        storage.ConsumeAllIgnoringDisease();
+    }
+
+    /// <summary>
+    /// Replacement for <see cref="DevPump.Sim1000ms"/>.
+    /// Returns false when the vanilla logic must run instead (the selection is an item, not an element).
+    /// </summary>
+    public bool TryFillStorage()
+    {
+        Tag tag = pump.SelectedTag;
+        if (!tag.IsValid)
+        {
+            return true;
+        }
+
+        Element element = ElementLoader.GetElement(tag);
+        if (element == null)
+        {
+            return false;
+        }
+
+        float missing = Kilograms - storage.GetAmountAvailable(tag);
+        if (missing > 0f)
+        {
+            storage.AddElement(element.id, missing, Temperature, byte.MaxValue, 0, false, false);
+        }
+
+        return true;
+    }
+
     private void UpdateCapacity()
     {
-        if (storage != null)
-        {
-            storage.capacityKg = Mathf.Max(20f, Kilograms * 2f);
-        }
+        storage.capacityKg = Mathf.Max(MinCapacityKg, Kilograms * 2f);
     }
 }
