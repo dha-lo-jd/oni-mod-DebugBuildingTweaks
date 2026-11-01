@@ -34,9 +34,9 @@ public sealed class DevPumpSideScreen : SideScreenContent
         Rebuild();
     }
 
-    // DetailsScreen lists side screens in descending order and every vanilla screen (including the element filter) returns 0,
-    // so a negative value keeps this panel below all of them.
-    public override int GetSideScreenSortOrder() => -1000;
+    // DetailsScreen lists side screens in descending order of this value. The vanilla element filter returns 0 and the
+    // debug tool panel (AutoPlumberSideScreen, shown in instant-build mode) returns -150, so -100 sits between them.
+    public override int GetSideScreenSortOrder() => -100;
 
     public override string GetTitle()
     {
