@@ -34,6 +34,10 @@ public sealed class DevPumpSideScreen : SideScreenContent
         Rebuild();
     }
 
+    // DetailsScreen lists side screens in descending order and every vanilla screen (including the element filter) returns 0,
+    // so a negative value keeps this panel below all of them.
+    public override int GetSideScreenSortOrder() => -1000;
+
     public override string GetTitle()
     {
         return Text.Title;
