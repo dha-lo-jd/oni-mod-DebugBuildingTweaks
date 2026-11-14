@@ -40,7 +40,7 @@ public sealed class DevPumpSideScreen : SideScreenContent
 
     public override string GetTitle()
     {
-        return Text.Title;
+        return STRINGS.DEV_PUMP.TITLE;
     }
 
     private void Rebuild()
@@ -68,9 +68,9 @@ public sealed class DevPumpSideScreen : SideScreenContent
         float tempMin = GameUtil.GetConvertedTemperature(DevPumpSettings.MinTemperature);
         float tempMax = GameUtil.GetConvertedTemperature(DevPumpSettings.MaxTemperature);
 
-        AddSetting(root, "Rate", Text.Rate, "g/s", 0f, target.MaxGramsPerSecond,
+        AddSetting(root, "Rate", STRINGS.DEV_PUMP.RATE, "g/s", 0f, target.MaxGramsPerSecond,
             () => target.GramsPerSecond, v => target.GramsPerSecond = v);
-        AddSetting(root, "Temp", Text.Temperature, GameUtil.GetTemperatureUnitSuffix().Trim(),
+        AddSetting(root, "Temp", STRINGS.DEV_PUMP.TEMPERATURE, GameUtil.GetTemperatureUnitSuffix().Trim(),
             tempMin, tempMax,
             () => GameUtil.GetConvertedTemperature(target.Temperature),
             v => target.SetTemperature(GameUtil.GetTemperatureConvertedToKelvin(v)));
@@ -214,13 +214,5 @@ public sealed class DevPumpSideScreen : SideScreenContent
     {
         return float.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value) ||
                float.TryParse(text, NumberStyles.Float, CultureInfo.CurrentCulture, out value);
-    }
-
-    private static class Text
-    {
-        private static bool Japanese => Localization.GetLocale()?.Code?.StartsWith("ja") == true;
-        public static string Title => Japanese ? "開発者ポンプ設定" : "Dev Pump Settings";
-        public static string Rate => Japanese ? "出力量" : "Output";
-        public static string Temperature => Japanese ? "温度" : "Temperature";
     }
 }
