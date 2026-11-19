@@ -17,4 +17,10 @@ dotnet build .\DebugBuildingTweaks.sln
 
 ## Game compatibility
 
-Checked against the U60 public test build; `minimumSupportedBuild` in `mod.yaml` / `mod_info.yaml` will be bumped once U60 is released.
+Updated for U60 (the Dev Pump patches were refactored to match the new game code). Verified to build against the released U60; `minimumSupportedBuild` is left unchanged.
+
+## Changelog
+
+### 1.0.1
+- U60 compatibility: refactored the Dev Pump patches; the settings panel is now placed below the vanilla filter panel.
+- Side screen text moved to `STRINGS.cs` with Japanese translation (`translations/ja.po`).

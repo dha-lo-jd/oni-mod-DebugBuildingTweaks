@@ -3,4 +3,4 @@ description: "Tweaks for debug buildings."
 requiredDlcIds: []
 forbiddenDlcIds: []
 minimumSupportedBuild: 744825
-version: "1.0.0"
+version: "1.0.1"
