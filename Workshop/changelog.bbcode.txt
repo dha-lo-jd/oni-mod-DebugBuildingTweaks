@@ -1,0 +1,13 @@
+[h1]Changelog / 更新履歴[/h1]
+
+[h2]1.1.0[/h2]
+[b]English[/b]
+[list]
+[*] Updated for U60 (requires the game's U60 or later). The Dev Pump patches were refactored, and the settings panel now sits below the vanilla filter panel.
+[*] Side screen text is now translatable; Japanese translation added.
+[/list]
+[b]日本語[/b]
+[list]
+[*] U60 に対応しました（ゲームの U60 以降が必要です）。Dev Pump のパッチを作り直し、設定パネルをバニラのフィルターパネルの下に置くようにしました。
+[*] サイドスクリーンの文字列を翻訳可能にし、日本語訳を追加しました。
+[/list]
