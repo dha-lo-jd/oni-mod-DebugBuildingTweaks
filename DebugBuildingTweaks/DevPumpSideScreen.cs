@@ -34,6 +34,10 @@ public sealed class DevPumpSideScreen : SideScreenContent
         Rebuild();
     }
 
+    // DetailsScreen lists side screens in descending order of this value. The vanilla element filter returns 0 and the
+    // debug tool panel (AutoPlumberSideScreen, shown in instant-build mode) returns -150, so -100 sits between them.
+    public override int GetSideScreenSortOrder() => -100;
+
     public override string GetTitle()
     {
         return STRINGS.DEV_PUMP.TITLE;
@@ -69,7 +73,7 @@ public sealed class DevPumpSideScreen : SideScreenContent
         AddSetting(root, "Temp", STRINGS.DEV_PUMP.TEMPERATURE, GameUtil.GetTemperatureUnitSuffix().Trim(),
             tempMin, tempMax,
             () => GameUtil.GetConvertedTemperature(target.Temperature),
-            v => target.Temperature = GameUtil.GetTemperatureConvertedToKelvin(v));
+            v => target.SetTemperature(GameUtil.GetTemperatureConvertedToKelvin(v)));
 
         root.AddOnRealize(go => content = go);
         root.AddTo(ContentContainer != null ? ContentContainer : gameObject);
