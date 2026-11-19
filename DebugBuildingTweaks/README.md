@@ -14,6 +14,7 @@ dotnet build .\DebugBuildingTweaks.sln
 - `DevPumpSettings.cs` – per-pump output rate / temperature and the replacement fill logic. The rate limit is derived from the pump's element state.
 - `DevPumpPatches.cs` – Harmony patches: attach the settings, redirect `DevPump.Sim1000ms`, and extend the element search.
 - `DevPumpSideScreen.cs` – PLib side screen for editing the settings.
+- `HarnessTests.cs` – in-game tests for Gravitas.TestHarness (Debug builds only).
 
 ## Game compatibility
 
