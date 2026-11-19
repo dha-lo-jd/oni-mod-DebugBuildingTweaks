@@ -61,6 +61,12 @@
         </Reference>
     </ItemGroup>
 
+    <!-- No pdb in Release builds. -->
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+    </PropertyGroup>
+
     <ItemGroup>
         <None Update="mod_info.yaml">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -76,13 +82,12 @@
             <ILRepackDebugFlag Condition="'$(Configuration)' == 'Release'">/ndebug</ILRepackDebugFlag>
             <ILRepackHarnessLib Condition="'$(Configuration)' == 'Debug' and '$(HarnessDllPath)' != ''">/lib:&quot;$([System.IO.Path]::GetDirectoryName($(HarnessDllPath)))&quot;</ILRepackHarnessLib>
         </PropertyGroup>
-        <Delete Files="$(ModInstallPath)\$(TargetName).pdb" Condition="'$(Configuration)' == 'Release' and '$(ModInstallPath)' != '' and Exists('$(ModInstallPath)\$(TargetName).pdb')" />
-        <RemoveDir Directories="$(TargetDir)merged" />
+                <RemoveDir Directories="$(TargetDir)merged" />
         <MakeDir Directories="$(TargetDir)merged" />
         <Exec Command="&quot;$(ILRepackExe)&quot; /parallel $(ILRepackDebugFlag) $(ILRepackHarnessLib) /lib:&quot;$(GameManagedPath)&quot; /out:&quot;$(TargetDir)merged\$(TargetFileName)&quot; &quot;$(TargetPath)&quot; &quot;$(TargetDir)PLib.dll&quot;" />
     </Target>
 
-    <Target Name="PostBuild" AfterTargets="MergeAssemblies" Condition="'$(ModInstallPath)' != ''">
+    <Target Name="PostBuild" AfterTargets="MergeAssemblies" Condition="'$(ModInstallPath)' != '' and '$(Configuration)' != 'Release'">
         <MakeDir Directories="$(ModInstallPath)" />
         <Delete Files="$(ModInstallPath)\PLib.dll" Condition="Exists('$(ModInstallPath)\PLib.dll')" />
         <Copy SourceFiles="$(TargetDir)merged\$(TargetFileName)" DestinationFolder="$(ModInstallPath)" Condition="Exists('$(TargetDir)merged\$(TargetFileName)')" />
@@ -107,6 +112,24 @@
             SourceFiles="@(ModAnimationFiles)"
             DestinationFiles="@(ModAnimationFiles->'$(ModInstallPath)\anim\%(RecursiveDir)%(Filename)%(Extension)')"
             Condition="'@(ModAnimationFiles)' != ''" />
+    </Target>
+
+    <!-- Release builds produce a clean distribution folder: <repo>\release\DebugBuildingTweaks (git-ignored). Nothing is copied to ModInstallPath. -->
+    <Target Name="PackageRelease" AfterTargets="MergeAssemblies" Condition="'$(Configuration)' == 'Release'">
+        <PropertyGroup>
+            <ReleaseDir>$(ProjectDir)..\release\$(TargetName)</ReleaseDir>
+        </PropertyGroup>
+        <ItemGroup>
+            <ReleaseTranslationFiles Include="$(ProjectDir)translations\*.po" />
+            <ReleaseStringFiles Include="$(ProjectDir)strings\*.po" />
+        </ItemGroup>
+        <RemoveDir Directories="$(ReleaseDir)" />
+        <MakeDir Directories="$(ReleaseDir)" />
+        <Copy SourceFiles="$(TargetDir)merged\$(TargetFileName)" DestinationFolder="$(ReleaseDir)" />
+        <Copy SourceFiles="$(ProjectDir)mod.yaml;$(ProjectDir)mod_info.yaml" DestinationFolder="$(ReleaseDir)" />
+        <Copy SourceFiles="$(ProjectDir)..\Workshop\preview.png" DestinationFolder="$(ReleaseDir)" Condition="Exists('$(ProjectDir)..\Workshop\preview.png')" />
+        <Copy SourceFiles="@(ReleaseTranslationFiles)" DestinationFolder="$(ReleaseDir)\translations" Condition="'@(ReleaseTranslationFiles)' != ''" />
+        <Copy SourceFiles="@(ReleaseStringFiles)" DestinationFolder="$(ReleaseDir)\strings" Condition="'@(ReleaseStringFiles)' != ''" />
     </Target>
 
 </Project>

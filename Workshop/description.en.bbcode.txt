@@ -1,0 +1,25 @@
+[h1]Debug Building Tweaks[/h1]
+
+Makes the debug [b]Dev Pumps[/b] (liquid and gas) easier to use: set how much they pump and at what temperature right from the side screen, and find elements in the filter by their internal ID too.
+
+Meant for debugging and testing. It adds nothing to normal gameplay, and Dev Pumps themselves are only available through the game's debug mode.
+
+[h2]Features[/h2]
+[list]
+[*] [b]Output rate[/b]: set it with a slider or by typing a number. The limit is [b]10000 g/s[/b] for the liquid Dev Pump and [b]1000 g/s[/b] for the gas Dev Pump
+[*] [b]Output temperature[/b]: set it in the side screen; the value follows the game's temperature unit (°C / K / °F). Until you set one, the element's default temperature is used
+[*] [b]Element filter search[/b]: the Dev Pump's filter also matches internal IDs (for example [i]OxygenGas[/i]), not only display names
+[*] The settings panel sits right below the vanilla filter panel
+[*] English and Japanese
+[/list]
+
+[h2]Notes[/h2]
+[list]
+[*] Updated for [b]U60[/b]. Requires the game's U60 or later.
+[*] Settings are saved per pump in the save file. Removing the mod turns the pumps back into vanilla Dev Pumps.
+[*] Changing the temperature empties the pump's stored output so the new temperature applies right away.
+[*] May conflict with other mods that change the side screens of Dev Pumps.
+[/list]
+
+[h2]Source[/h2]
+[url=https://github.com/dha-lo-jd/oni-mod-DebugBuildingTweaks]GitHub[/url] (MIT License)
