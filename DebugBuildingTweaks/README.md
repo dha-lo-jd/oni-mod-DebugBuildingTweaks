@@ -22,6 +22,9 @@ Updated for U60; works on both U60 and U59 (build 744825+).
 
 ## Changelog
 
+### 1.1.1
+- Supports both U59 and U60 (build 744825+).
+
 ### 1.1.0
 - U60 compatibility: refactored the Dev Pump patches; the settings panel is now placed below the vanilla filter panel.
 - Side screen text moved to `STRINGS.cs` with Japanese translation (`translations/ja.po`).
