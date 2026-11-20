@@ -18,7 +18,7 @@ dotnet build .\DebugBuildingTweaks.sln
 
 ## Game compatibility
 
-Updated for U60; requires the game's U60 or later (build 763796+).
+Updated for U60; works on both U60 and U59 (build 744825+).
 
 ## Changelog
 

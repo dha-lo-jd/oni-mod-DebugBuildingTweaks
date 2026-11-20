@@ -15,7 +15,7 @@ Meant for debugging and testing. It adds nothing to normal gameplay, and Dev Pum
 
 [h2]Notes[/h2]
 [list]
-[*] Updated for [b]U60[/b]. Requires the game's U60 or later.
+[*] Updated for [b]U60[/b]. Works on both U60 and U59.
 [*] Settings are saved per pump in the save file. Removing the mod turns the pumps back into vanilla Dev Pumps.
 [*] Changing the temperature empties the pump's stored output so the new temperature applies right away.
 [*] May conflict with other mods that change the side screens of Dev Pumps.
